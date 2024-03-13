@@ -15,12 +15,12 @@ export default function OutlinedInput(theme) {
         },
         root: {
           '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.light
+            borderColor: theme.palette.success.lighter
           },
           '&.Mui-focused': {
-            boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.main, 0.2)}`,
+            boxShadow: `0 0 0 2px ${alpha(theme.palette.success.main, 0.2)}`,
             '& .MuiOutlinedInput-notchedOutline': {
-              border: `1px solid ${theme.palette.primary.light}`
+              border: `1px solid ${theme.palette.success.lighter}`
             }
           },
           '&.Mui-error': {
