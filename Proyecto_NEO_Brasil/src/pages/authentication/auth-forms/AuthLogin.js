@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { loginNeo, loginMediquo } from "store/reducers/auth";
-import { clearMessage } from "store/reducers/message";
+import { useDispatch } from 'react-redux';
+import { loginNeo } from 'store/reducers/auth';
+import { clearMessage } from 'store/reducers/message';
 // import { getProvedores } from 'service/neo';
-import { validateUser } from 'service/mediquo'
+// import { validateUser } from 'service/mediquo';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-
 // material-ui
-import {
-  FormHelperText,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Stack,
-  Alert,
-  AlertTitle,
-} from '@mui/material';
+import { FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Alert, AlertTitle } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -30,7 +19,6 @@ import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -64,10 +52,10 @@ const AuthLogin = ({ setAuth }) => {
     event.preventDefault();
   };
 
-  const checkUserMediquo = async (code) => {
-    const { validate, usermediquo } = await validateUser(code);
-    return { validate, usermediquo }
-  };
+  // const checkUserMediquo = async (code) => {
+  //   const { validate, usermediquo } = await validateUser(code);
+  //   return { validate, usermediquo };
+  // };
 
   return (
     <>
@@ -80,11 +68,10 @@ const AuthLogin = ({ setAuth }) => {
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().max(255).required('usuário é requerido'),
-          password: Yup.string().max(255).required('Senha é requerida'),
+          password: Yup.string().max(255).required('Senha é requerida')
           // operadora: Yup.string().required("Uma operadora é requerida!"),
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-
           setLoading(true);
 
           const enableAccess = () => {
@@ -92,7 +79,7 @@ const AuthLogin = ({ setAuth }) => {
             setStatus({ success: true });
             setSubmitting(true);
             navigate('/');
-          }
+          };
 
           const userFailed = (error) => {
             setAuth(false);
@@ -100,34 +87,32 @@ const AuthLogin = ({ setAuth }) => {
             setErrors({ submit: error });
             setSubmitting(false);
             setLoading(false);
-          }
+          };
 
           dispatch(loginNeo({ username: values.email, password: values.password }))
             .unwrap()
             .then(async (p) => {
-              if (p.user?.access) {
-
-                const hasUser = await checkUserMediquo(p.user?.subscriber_id || "")
-                if (hasUser.validate) {
-
-                  dispatch(loginMediquo(hasUser.usermediquo))
-                    .unwrap()
-                    .then(async () => {
-                      enableAccess()
-                    }).catch(() => {
-                      setLoading(false);
-                    });
-                }
-                else
-                  navigate('/register');
-
+              console.log(p);
+              if (p.user?.data?.access_token) {
+                enableAccess();
+                // const hasUser = await checkUserMediquo(p.user?.subscriber_id || '');
+                // if (hasUser.validate) {
+                //   dispatch(loginMediquo(hasUser.usermediquo))
+                //     .unwrap()
+                //     .then(async () => {
+                //       // enableAccess();
+                //     })
+                //     .catch(() => {
+                //       setLoading(false);
+                //     });
+                // } else navigate('/register');
               } else {
-                userFailed(p.user?.error)
+                userFailed(p.user?.error);
                 setLoading(false);
               }
             })
             .catch((p) => {
-              userFailed(p.user?.error)
+              userFailed(p.user?.error);
               setLoading(false);
             });
         }}
@@ -157,9 +142,8 @@ const AuthLogin = ({ setAuth }) => {
                 </Stack>
               </Grid> */}
 
-
               <Grid item xs={12}>
-                <Stack spacing={.5}>
+                <Stack spacing={0.5}>
                   <InputLabel htmlFor="email-login">Usuário</InputLabel>
                   <OutlinedInput
                     id="email-login"
@@ -180,7 +164,7 @@ const AuthLogin = ({ setAuth }) => {
                 </Stack>
               </Grid>
               <Grid item xs={12}>
-                <Stack spacing={.5}>
+                <Stack spacing={0.5}>
                   <InputLabel htmlFor="password-login">Senha</InputLabel>
                   <OutlinedInput
                     fullWidth
@@ -217,16 +201,27 @@ const AuthLogin = ({ setAuth }) => {
                 <Grid item xs={12}>
                   <Alert severity="error">
                     <AlertTitle>Atenção!</AlertTitle>
-                    <strong>code: </strong>{errors.submit?.errorCode}<br />
-                    <strong>description: </strong>{errors.submit?.details}
+                    <strong>code: </strong>
+                    {errors.submit?.errorCode}
+                    <br />
+                    <strong>description: </strong>
+                    {errors.submit?.details}
                   </Alert>
                 </Grid>
               )}
               <Grid item xs={12} sx={{ mt: 1 }}>
                 <AnimateButton>
-                  <LoadingButton fullWidth size="large" type="submit" variant="contained" color="success" sx={{
-                    '&:hover': { bgcolor: 'success.lighter' }
-                  }} loading={loading}>
+                  <LoadingButton
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    color="success"
+                    sx={{
+                      '&:hover': { bgcolor: 'success.lighter' }
+                    }}
+                    loading={loading}
+                  >
                     Login
                   </LoadingButton>
                 </AnimateButton>

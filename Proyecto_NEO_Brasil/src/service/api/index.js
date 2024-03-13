@@ -6,26 +6,22 @@ import axios from 'axios';
 // axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 
 const apiNeo = axios.create({
-    baseURL: "https://20arn6e6dj.execute-api.us-east-1.amazonaws.com"
+  baseURL: 'https://20arn6e6dj.execute-api.us-east-1.amazonaws.com'
 });
 
 const apiLoginNeo = axios.create({
-    baseURL: "https://9097yffrd7.execute-api.us-east-1.amazonaws.com"
+  baseURL: 'http://tsulmed.com'
 });
 
 const apiMediquo = axios.create({
-    baseURL: "https://tsul.net.br",
-    headers: {
-        'X-API-Key': 'ybmed9ve3oq7xVxS',
-        'X-Secret-Key': '1G10VPDhzfbic6CCk1KdjlFQD5xzLXM9d4lGZ9RHPjX7kJrqb1w9ioDqbtqEBgJk',
-    }
+  baseURL: 'https://tsul.net.br',
+  headers: {
+    'X-API-Key': 'ybmed9ve3oq7xVxS',
+    'X-Secret-Key': '1G10VPDhzfbic6CCk1KdjlFQD5xzLXM9d4lGZ9RHPjX7kJrqb1w9ioDqbtqEBgJk'
+  }
 });
 
-export {
-  apiNeo,
-  apiLoginNeo,
-  apiMediquo
-};
+export { apiNeo, apiLoginNeo, apiMediquo };
 
 // axios.interceptors.request.use(
 //   function (config) {
