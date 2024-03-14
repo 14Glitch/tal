@@ -9,7 +9,7 @@
  *
  */
 
-import logo from 'assets/images/logos/tal.png';
+import logo from 'assets/images/logos/tal-estensive.png';
 
 // ==============================|| LOGO SVG ||============================== //
 

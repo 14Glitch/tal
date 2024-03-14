@@ -34,9 +34,9 @@ const NavItem = ({ item, level }) => {
 
   const itemHandler = (id) => {
     dispatch(activeItem({ openItem: [id] }));
-    window.setTimeout(()=>{
+    window.setTimeout(() => {
       dispatch(openDrawer({ drawerOpen: false }));
-    },100)
+    }, 100)
   };
 
   const Icon = item.icon;
@@ -108,11 +108,11 @@ const NavItem = ({ item, level }) => {
             }),
             ...(!drawerOpen &&
               isSelected && {
-                bgcolor: 'primary.lighter',
-                '&:hover': {
-                  bgcolor: 'primary.lighter'
-                }
-              })
+              bgcolor: 'primary.lighter',
+              '&:hover': {
+                bgcolor: 'primary.lighter'
+              }
+            })
           }}
         >
           {itemIcon}

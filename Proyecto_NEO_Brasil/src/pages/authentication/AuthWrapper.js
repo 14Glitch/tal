@@ -5,7 +5,7 @@ import { Box, Grid, Stack, Container } from '@mui/material';
 
 // project import
 import AuthCard from './AuthCard';
-import Logo from 'components/Logo';
+import logo from 'assets/images/logos/tal.png';
 import AuthFooter from 'components/cards/AuthFooter';
 
 // assets
@@ -24,7 +24,7 @@ const AuthWrapper = ({ children }) => (
       }}
     >
       <Container maxWidth="xl" sx={{ mt: 1 }}>
-        <Logo />
+        <img src={logo} alt="Tal - Da saúde ao lazer." width="100" />
       </Container>
       <Grid item xs={12}>
         <Grid
